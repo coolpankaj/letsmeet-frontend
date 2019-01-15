@@ -1,0 +1,69 @@
+body {
+    height: 100vh;
+    overflow: hidden;
+    overflow-y: scroll;
+  }
+  .my-bg{
+      background-image: url('./../../../assets/bg.jpg');
+      min-height: 100vh !important;
+    
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-attachment: fixed;
+      }
+      .box {
+        /* background-image: url(./../../../assets//optimized.jpg);*/
+        background-size: cover;
+        background-attachment: fixed;
+        background-position: center;
+        margin-top: 50px;
+        border-radius: 3.5px;
+        background-color:transparent;
+        box-shadow: 0px 4px 44px 16px rgba(46,87,39,1);
+        
+      }
+      section {
+        font-size: 25px;
+        text-align: center;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-weight: 400;
+      }
+      label {
+        font-size: 16px;
+        color: black; 
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+    
+      }
+      input {
+        border: none;
+        border-bottom: 1px solid blue;
+        background-color: transparent;
+        
+      }
+      input:focus {
+        outline: none;
+        background: transparent;
+        
+      }
+      select {
+        
+        font-size: 12px;
+        background-color: transparent !important;
+        outline: none;
+        border: none;
+        border-bottom: 1px solid blue;
+        max-width: 50%;
+      
+      }
+      select:focus {
+        outline: none;
+        
+        background: transparent;
+      }
+  
+      input[type=checkbox] {
+        height: 20px;
+        width:20px;
+      }
+  

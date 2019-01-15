@@ -1,0 +1,248 @@
+<body>
+  <div class="container-fluid">
+    <h3 class="text text-center text-dark">Let's Meet - Book Your Meeting<span>
+
+        <div class="btn-group" role="group" style="float: right;">
+          <button id="btnGroupDropUserInfo" type="button" class="btn btn-info rounded" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            {{adminName ? adminName : 'Admin'}}
+          </button>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDropUserInfo">
+            <a class="dropdown-item" (click)="goToAdminDashboard()">View my meetings</a>
+          </div>
+        </div>
+      </span></h3>
+    <hr>
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div id="accordion">
+          <div class="card">
+            <div class="card-header bg-secondary" id="headingOne">
+              <h5 class="mb-0">
+                <button style="color:white" class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
+                  aria-expanded="true" aria-controls="collapseOne">
+                  Meeting Subject
+                </button>
+              </h5>
+            </div>
+
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+              <div class="card-body">
+                <div class="form-group">
+
+                  <input type="text" #topic="ngModel" id="inputSubject" name="subject" [(ngModel)]="subject" class="form-control"
+                    placeholder="Meeting Topic" required autofocus>
+
+                  <div [hidden]="topic.pristine || topic.valid" class="alert alert-danger">
+                    <div *ngIf="topic.errors?.required">
+                      ** Subject Name is required!
+                    </div>
+                  </div>
+
+                  <br>
+
+                  <textarea type="text" #agenda="ngModel" id="inputDescription" name="description" [(ngModel)]="description"
+                    class="form-control" placeholder="Meeting Description" required></textarea>
+
+                  <div [hidden]="agenda.pristine || agenda.valid" class="alert alert-danger">
+                    <div *ngIf="agenda.errors?.required">
+                      ** Description is required!
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header bg-secondary" id="headingTwo">
+              <h5 class="mb-0">
+                <button style="color:white" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo"
+                  aria-expanded="false" aria-controls="collapseTwo">
+                  Select The participants
+                </button>
+              </h5>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="people-list">
+                        <div class="card my-card" id="card-design" *ngFor="let user of allUsersData">
+
+                          <div class="card-body" (click)="getSelected(user)" *ngIf="user.userId != receiverId">
+                            <span class="font-weight-bold" style="text-transform:capitalize;">{{user.firstName}} {{user.lastName}}</span><br>
+                            <span>{{user.email}}</span>
+                            <span *ngIf="user.isAdmin=='true'">Admin</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <h6>Selected User</h6>
+                    <div class="card" *ngIf="selectedUser">
+                      <div class="card-body">
+                        <h5 class="card-title">{{selectedUser.firstName}} {{selectedUser.lastName}}</h5>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header bg-secondary" id="headingThree">
+              <h5 class="mb-0">
+                <button style="color:white" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree"
+                  aria-expanded="false" aria-controls="collapseThree">
+                  Meeting Timings
+                </button>
+              </h5>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+              <div class="card-body">
+                <div class="form-group">
+
+                  <span class="form-heading">Start Time </span>
+
+                  <label for="startTime" class="sr-only">Start Time:</label>
+                  <input [owlDateTime]="dt1" name="startDate1" [(ngModel)]="startDate1" placeholder="Start Date Time">
+                  <span [owlDateTimeTrigger]="dt1">
+                    <i><img src="./../../../assets/calendar.png" alt="calendar" height="20px" width="20px"></i>
+                  </span>
+                  <owl-date-time #dt1></owl-date-time>
+                  <br>
+                  <br>
+
+                  <span class="form-heading">End Time </span>
+
+                  <label for="endTime" class="sr-only">End Time:</label>
+                  <input [owlDateTime]="dt2" name="endDate1" [(ngModel)]="endDate1" placeholder="End Date Time">
+
+                  <span [owlDateTimeTrigger]="dt2">
+                    <i><img src="./../../../assets/calendar.png" alt="calendar" height="20px" width="20px"></i>
+                  </span>
+                  <owl-date-time #dt2></owl-date-time>
+
+                  <br>
+                  <br>
+                  <div *ngIf="validateDate(startDate1,endDate1)" class="alert alert-danger">
+                      * End Date/Time cannot be before Start Date/Time.
+                    </div>
+    
+                    <div *ngIf="validateCurrentDate(startDate1) || validateCurrentDate(endDate1)" class="alert alert-danger">
+                      * How one can Schedule a meeting in back date?
+                    </div>
+
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header bg-secondary" id="headingFour">
+              <h5 class="mb-0">
+                <button style="color:white" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour"
+                  aria-expanded="false" aria-controls="collapseFour">
+                  Meeting Location
+                </button>
+              </h5>
+            </div>
+            <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-12">
+                    <input type="text" #location="ngModel" pattern="^[A-Z][A-za-z ]+$" id="inputVenue" name="venue"
+                      [(ngModel)]="venue" class="form-control" placeholder="Venue" required>
+                  </div>
+                </div><br><br>
+                <div class="row">
+                  <div class="col-12">
+                    <button type="button" class="btn btn-info rounded" style="float: right;" (click)="viewScheduledMeetingFunction()">
+                      View Scheduled Meeting
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <button id="btn-finalize" type="button" class="btn btn-danger rounded" (click)="goToAdminDashboard()" style="float:right">
+          Back to Dashboard</button>
+      </div>
+    </div>
+
+  </div>
+</body>
+
+
+
+<ng-template #modalContent let-close="close">
+    <div class="modal-header">
+      <h5 class="modal-title">Meeting Details</h5>
+      <button type="button" class="close" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-12">
+
+            <div class="card border-bottom" id="subjectCard">
+                <div class="card-body">
+                  <h5 class="card-title">Subject</h5>
+                  <p class="card-text" *ngIf="subject">{{subject}} </p>                                
+                  <p *ngIf="!subject" class="alert alert-danger">** Subject is required</p>
+    
+                </div>
+            </div>
+
+            <div class="card border-bottom" id="whoCard">
+                <div class="card-body">
+                  <h5 class="card-title">Participant</h5>
+                  <p class="card-text" *ngIf="selectedUser">{{selectedUser.firstName}} {{selectedUser.lastName}}</p>                                
+                  <p *ngIf="!selectedUser" class="alert alert-danger">** User is required</p>
+
+                </div>
+            </div>
+
+            <div class="card border-bottom" id="whenCard">
+                <div class="card-body">
+                  <h5 class="card-title">Date & Time</h5>
+                  <p class="card-text" *ngIf="startDate1 && endDate1">{{startDate1 | date: 'medium'}} - {{endDate1 | date: 'medium' }}</p>                                
+
+                  <p *ngIf="!startDate1" class="alert alert-danger">** Start Date/Time is required</p>
+                  <p *ngIf="!endDate1" class="alert alert-danger">** End Date/Time is required</p>
+
+                </div>
+            </div>
+
+
+            <div class="card border-bottom" id="whereCard">
+                <div class="card-body">
+                  <h5 class="card-title">Location</h5>
+                  <p class="card-text" *ngIf="venue">{{venue}}</p>                                
+                  <p *ngIf="!venue" class="alert alert-danger">** Venue is required</p>
+
+                </div>
+            </div>
+
+          </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+        <button id="btn-finalize" type="button" class="btn btn-success rounded" (click)="createMeetingFunction();close()">
+            Finalize Meeting</button>
+        <button type="button" class="btn btn-outline-secondary" (click)="close()">Back</button>
+    
+    </div>
+
+  </ng-template>
