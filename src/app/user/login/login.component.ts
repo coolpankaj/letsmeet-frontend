@@ -65,6 +65,7 @@ export class LoginComponent implements OnInit {
         }
 
       } else  {
+        this.loading = false;
         this.toastr.errorToastr(`${apiResponse.message}`, 'Error')
         this.loginForm.reset()
 
