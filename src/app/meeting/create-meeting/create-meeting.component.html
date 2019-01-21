@@ -82,9 +82,10 @@
                   </div>
                   <div class="col-md-6">
                     <h6>Selected User</h6>
+                    <!--  *ngIf="selectedUser" -->
                     <div class="card" *ngIf="selectedUser">
-                      <div class="card-body">
-                        <h5 class="card-title">{{selectedUser.firstName}} {{selectedUser.lastName}}</h5>
+                      <div class="card-body" *ngFor="let current of selectedUser">
+                        <h5 class="card-title">{{current.firstName}} {{current.lastName}}</h5>
                       </div>
                     </div>
                   </div>

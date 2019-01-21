@@ -51,6 +51,7 @@ export class CreateMeetingComponent implements OnInit {
 
   public getSelected = (user) => {
     this.selectedUser = user
+   
   }
 
   public goToAdminDashboard(): any {

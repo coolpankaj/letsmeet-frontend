@@ -42,4 +42,11 @@ ul:hover {
 li:hover {
     background-color: rgb(200, 212, 223);
 }
+.calendar-view {
+    border: 1px solid red;
+    border-radius: 25px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
 

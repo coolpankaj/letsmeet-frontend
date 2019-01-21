@@ -8,8 +8,8 @@ import * as io from 'socket.io-client';
   providedIn: 'root'
 })
 export class SocketService {
-  //public baseUrl = "http://localhost:3000";
- private baseUrl = "http://api.coolcoder.xyz";
+  public baseUrl = "http://localhost:3000";
+// private baseUrl = "http://api.coolcoder.xyz";
   public socket;
 
   constructor(private _http: HttpClient) {
